@@ -1,123 +1,224 @@
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  Heart,
+  Sparkles,
+  RotateCcw,
+  Cake,
+} from "lucide-react";
 
-function CakeCelebration({ onNext, onBack }) {
-  const [wishMade, setWishMade] = useState(false);
+function CakeCelebration({ onBack, onRestart }) {
+  const [isCut, setIsCut] = useState(false);
+
+  const balloons = Array.from({ length: 14 }, (_, index) => ({
+    id: index,
+    side: index % 2 === 0 ? "left" : "right",
+    delay: (index % 7) * 0.25,
+    duration: 4 + (index % 4),
+    x: (index % 4) * 35,
+  }));
 
   return (
     <section className="cake-screen">
+      <div className="cake-glow cake-glow-one" />
+      <div className="cake-glow cake-glow-two" />
+
+      {/* Balloons rise only from left and right sides */}
+      <div className="cake-balloon-layer">
+        {isCut &&
+          balloons.map((balloon) => (
+            <motion.div
+              key={balloon.id}
+              className={`cake-flying-balloon ${balloon.side}`}
+              initial={{
+                y: "110vh",
+                opacity: 0,
+                scale: 0.7,
+              }}
+              animate={{
+                y: "-20vh",
+                opacity: [0, 1, 1, 0],
+                scale: [0.7, 1, 1, 0.8],
+              }}
+              transition={{
+                duration: balloon.duration,
+                delay: balloon.delay,
+                ease: "easeOut",
+              }}
+              style={{
+                left:
+                  balloon.side === "left"
+                    ? `${3 + (balloon.id % 4) * 5}%`
+                    : "auto",
+                right:
+                  balloon.side === "right"
+                    ? `${3 + (balloon.id % 4) * 5}%`
+                    : "auto",
+              }}
+            >
+              🎈
+            </motion.div>
+          ))}
+      </div>
+
       <motion.div
         className="cake-card"
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.7 }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
       >
-        <p className="eyebrow cake-eyebrow">
-          <Sparkles size={14} />
-          A LITTLE BIRTHDAY MAGIC
-          <Sparkles size={14} />
-        </p>
+        <div className="cake-heading">
+          <Sparkles size={20} />
+          <p>THE GRAND FINALE</p>
+          <Sparkles size={20} />
+        </div>
 
         <h1 className="cake-title">
-          Make a <span>Wish!</span>
+          Let's Celebrate,
+          <span> Ragani! 🎂</span>
         </h1>
 
         <p className="cake-description">
-          Close your eyes, make a wish, and let the magic begin.
+          Make a wish and get ready for your birthday celebration.
         </p>
 
-        <div className={`cake-illustration ${wishMade ? "cake-celebrated" : ""}`}>
-          <div className="cake-glow"></div>
-
+        {/* Cake illustration */}
+        <div className={`cake-illustration ${isCut ? "cake-is-cut" : ""}`}>
           <div className="cake-candles">
-            <div className="candle">
-              {!wishMade && <span className="flame"></span>}
-              <span className="candle-stick"></span>
-            </div>
-
-            <div className="candle candle-middle">
-              {!wishMade && <span className="flame"></span>}
-              <span className="candle-stick"></span>
-            </div>
-
-            <div className="candle">
-              {!wishMade && <span className="flame"></span>}
-              <span className="candle-stick"></span>
-            </div>
+            {[0, 1, 2].map((candle) => (
+              <div className="cake-candle" key={candle}>
+                <motion.div
+                  className="cake-flame"
+                  animate={{
+                    scale: [1, 1.15, 0.9, 1],
+                    opacity: [1, 0.8, 1],
+                  }}
+                  transition={{
+                    duration: 0.7,
+                    repeat: Infinity,
+                    delay: candle * 0.15,
+                  }}
+                />
+              </div>
+            ))}
           </div>
 
           <div className="cake-top">
-            <span className="cake-sprinkle sprinkle-one"></span>
-            <span className="cake-sprinkle sprinkle-two"></span>
-            <span className="cake-sprinkle sprinkle-three"></span>
-            <span className="cake-sprinkle sprinkle-four"></span>
+            <div className="cake-frosting">
+              <span>♥</span>
+              <span>♥</span>
+              <span>♥</span>
+              <span>♥</span>
+            </div>
           </div>
 
           <div className="cake-middle">
-            <span className="cake-cream cream-one"></span>
-            <span className="cake-cream cream-two"></span>
-            <span className="cake-cream cream-three"></span>
+            <div className="cake-middle-decoration">
+              ✦　♥　✦　♥　✦
+            </div>
           </div>
 
           <div className="cake-bottom">
-            <span className="cake-berry berry-one">♥</span>
-            <span className="cake-berry berry-two">♥</span>
-            <span className="cake-berry berry-three">♥</span>
+            <div className="cake-bottom-decoration">
+              ♥　✦　♥　✦　♥
+            </div>
           </div>
 
-          <div className="cake-plate"></div>
+          <div className="cake-plate" />
+
+          {/* Three vertical lines divide the cake into four sections */}
+          <AnimatePresence>
+            {isCut && (
+              <motion.div
+                className="cake-vertical-slices"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <span className="cake-vertical-cut cut-one" />
+                <span className="cake-vertical-cut cut-two" />
+                <span className="cake-vertical-cut cut-three" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        <AnimatePresence mode="wait">
-          {wishMade ? (
-            <motion.div
-              className="wish-message"
-              key="wish"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
+        {!isCut ? (
+          <>
+            <motion.button
+              className="cake-cut-button"
+              onClick={() => setIsCut(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <h2>Wish sent to the universe! ✨</h2>
-              <p>May your special day bring you a thousand reasons to smile.</p>
-            </motion.div>
-          ) : (
-            <motion.p
-              className="wish-hint"
-              key="hint"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              Ready? Tap the button below!
-            </motion.p>
-          )}
-        </AnimatePresence>
+              <Cake size={20} />
+              Cut the Cake
+              <Heart size={18} fill="currentColor" />
+            </motion.button>
 
-        <div className="cake-actions">
-          <button className="letter-back-button" onClick={onBack}>
-            <ArrowLeft size={16} />
-            <span>Back</span>
-          </button>
-
-          {!wishMade ? (
             <button
-              className="start-button wish-button"
-              onClick={() => setWishMade(true)}
+              className="cake-return-button"
+              onClick={onBack}
             >
-              <span>Make a Wish</span>
-              <Sparkles size={17} />
+              <ArrowLeft size={16} />
+              Back to Surprise
             </button>
-          ) : (
-            <button className="start-button wish-button" onClick={onNext}>
-              <span>Next Surprise</span>
-              <ArrowRight size={17} />
-            </button>
-          )}
-        </div>
+          </>
+        ) : (
+          <motion.div
+            className="cake-final-message"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <motion.div
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <Heart
+                size={30}
+                fill="currentColor"
+                className="cake-final-heart"
+              />
+            </motion.div>
+
+            <h2>Happy Birthday, Ragani! ❤️</h2>
+
+            <p>
+              May your days be filled with happiness, your heart with
+              beautiful memories, and your future with endless possibilities.
+            </p>
+
+            <p className="cake-final-wish">
+              Keep smiling and keep shining! ✨
+            </p>
+
+            <div className="cake-final-actions">
+              <button
+                className="cake-back-button"
+                onClick={() => setIsCut(false)}
+              >
+                <ArrowLeft size={16} />
+                Again
+              </button>
+
+              {/* Start Again appears only on the last page */}
+              <button
+                className="cake-restart-button"
+                onClick={onRestart}
+              >
+                <RotateCcw size={16} />
+                Start Again
+              </button>
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </section>
   );
 }
 
 export default CakeCelebration;
+

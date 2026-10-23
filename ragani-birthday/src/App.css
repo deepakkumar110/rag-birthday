@@ -1,48 +1,60 @@
+
 /* =========================================
    RAGANI BIRTHDAY WEBSITE
-   Complete Responsive Styling
-   Welcome + Birthday Letter + Cake
+   Premium Burgundy + Pink Theme
 ========================================= */
 
-/* ---------- GLOBAL STYLES ---------- */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap");
+
+/* =========================================
+   1. GLOBAL STYLES
+========================================= */
+
+:root {
+  --bg: #10040a;
+  --bg-light: #1b0611;
+  --card: rgba(39, 8, 24, 0.86);
+  --pink: #ff5c9b;
+  --pink-light: #ffb4d0;
+  --pink-dark: #d52d70;
+  --rose: #f58aaa;
+  --gold: #ffd59a;
+  --white: #fff5f8;
+  --muted: #d4b4c2;
+  --border: rgba(255, 180, 208, 0.23);
+  --shadow: 0 25px 90px rgba(0, 0, 0, 0.45);
+}
 
 * {
   box-sizing: border-box;
-}
-
-:root {
-  font-family: "Inter", "Segoe UI", sans-serif;
-  color: #fff4fa;
-  background: #0b0815;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-  min-width: 320px;
   min-height: 100%;
+  background: var(--bg);
   scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  min-height: 100dvh;
+  font-family: "DM Sans", sans-serif;
+  color: var(--white);
   background:
     radial-gradient(
       ellipse at 15% 15%,
-      rgba(119, 64, 145, 0.17),
-      transparent 45%
+      rgba(126, 14, 60, 0.23),
+      transparent 42%
     ),
     radial-gradient(
       ellipse at 85% 85%,
-      rgba(203, 91, 157, 0.12),
-      transparent 42%
+      rgba(201, 31, 95, 0.13),
+      transparent 38%
     ),
-    #0b0815;
+    var(--bg);
+  overflow-x: hidden;
 }
 
 button {
@@ -50,881 +62,1314 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid #ffb8df;
-  outline-offset: 4px;
+  outline: 2px solid var(--pink-light);
+  outline-offset: 5px;
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 #root {
   min-height: 100vh;
-  min-height: 100dvh;
 }
 
 .birthday-app {
-  min-height: 100vh;
-  min-height: 100dvh;
   position: relative;
-  overflow: hidden;
+  min-height: 100vh;
   isolation: isolate;
+  overflow: hidden;
 }
 
-/* ---------- SHARED EYEBROW ---------- */
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0;
-  color: #e6a7d0;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  line-height: 1.8;
-  text-transform: uppercase;
+.birthday-app::before,
+.birthday-app::after {
+  content: "♥";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  color: rgba(255, 75, 140, 0.12);
+  font-size: 170px;
+  filter: blur(1px);
+  animation: backgroundHeartFloat 12s ease-in-out infinite;
 }
 
-/* ---------- SHARED PRIMARY BUTTON ---------- */
-
-.start-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 11px;
-  min-height: 49px;
-  max-width: 100%;
-  padding: 0 23px;
-  border: 1px solid rgba(255, 219, 241, 0.35);
-  border-radius: 30px;
-  background: linear-gradient(110deg, #f4a2cd, #d98be9);
-  color: #29122c;
-  box-shadow: 0 8px 28px rgba(228, 125, 192, 0.2);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
+.birthday-app::before {
+  left: -55px;
+  top: 8%;
+  transform: rotate(-20deg);
 }
 
-.start-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(228, 125, 192, 0.32);
-  filter: brightness(1.05);
+.birthday-app::after {
+  right: -55px;
+  bottom: 5%;
+  animation-delay: -5s;
 }
 
-.start-button:active {
-  transform: scale(0.98);
+@keyframes backgroundHeartFloat {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -30px;
+  }
 }
 
-/* =========================================
-   WELCOME SCREEN
-========================================= */
+/* Shared page backgrounds */
 
-.welcome-screen {
-  min-height: 100vh;
-  min-height: 100dvh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 20px;
+.welcome-screen,
+.secret-screen,
+.cake-screen {
   position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 22px;
   overflow: hidden;
   background:
     radial-gradient(
-      ellipse at 50% 42%,
-      rgba(120, 59, 116, 0.2),
-      transparent 60%
+      ellipse at 50% 45%,
+      rgba(105, 12, 48, 0.2),
+      transparent 65%
     ),
-    linear-gradient(160deg, #100a1c, #0b0815);
+    linear-gradient(145deg, #10040a, #210714 52%, #10040a);
+}
+
+.welcome-glow,
+.secret-glow,
+.cake-glow {
+  position: absolute;
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.glow-one,
+.secret-glow-one,
+.cake-glow-one {
+  top: -120px;
+  left: -90px;
+  background: #ed2678;
+}
+
+.glow-two,
+.secret-glow-two,
+.cake-glow-two {
+  right: -120px;
+  bottom: -100px;
+  background: #8d174b;
+}
+
+/* =========================================
+   2. SHARED TYPOGRAPHY
+========================================= */
+
+.welcome-card h1,
+.secret-card h1,
+.cake-card h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -1.2px;
+}
+
+.welcome-card h1 span,
+.secret-card h1 span,
+.cake-card h1 span {
+  display: block;
+  color: var(--pink-light);
+  font-style: italic;
+}
+
+.welcome-eyebrow,
+.secret-eyebrow,
+.cake-heading p {
+  color: var(--pink-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  line-height: 1.8;
+}
+
+.welcome-description,
+.secret-description,
+.cake-description {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   3. WELCOME PAGE
+========================================= */
+
+.welcome-screen {
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .welcome-card {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 500px;
-  padding: 42px 28px;
+  width: min(100%, 760px);
+  padding: 58px 55px 38px;
   text-align: center;
-  border: 1px solid rgba(233, 165, 209, 0.16);
+  border: 1px solid var(--border);
   border-radius: 28px;
-  background: linear-gradient(
-    145deg,
-    rgba(36, 21, 47, 0.95),
-    rgba(20, 13, 32, 0.96)
-  );
+  background:
+    linear-gradient(
+      145deg,
+      rgba(67, 13, 38, 0.72),
+      rgba(24, 5, 15, 0.94)
+    );
   box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(18px);
+    var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-.welcome-title {
-  margin: 24px 0 15px;
-  color: #fff4fa;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(40px, 8vw, 60px);
-  font-weight: 400;
-  line-height: 1.12;
+.welcome-heart {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 24px;
+  color: var(--pink-light);
+  border: 1px solid rgba(255, 120, 175, 0.4);
+  border-radius: 50%;
+  background: rgba(255, 73, 142, 0.12);
+  box-shadow:
+    0 0 35px rgba(255, 66, 137, 0.15),
+    inset 0 0 25px rgba(255, 66, 137, 0.08);
 }
 
-.welcome-title span {
-  display: block;
-  color: #f5a9d0;
-  font-style: italic;
+.welcome-sparkle {
+  position: absolute;
+  top: 60px;
+  right: 65px;
+  color: var(--gold);
+  animation: sparklePulse 2s ease-in-out infinite;
+}
+
+@keyframes sparklePulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    scale: 0.9;
+  }
+
+  50% {
+    opacity: 1;
+    scale: 1.12;
+  }
+}
+
+.welcome-eyebrow {
+  margin-bottom: 19px;
+}
+
+.welcome-card h1 {
+  margin-bottom: 25px;
+  font-size: clamp(38px, 7vw, 67px);
+}
+
+.welcome-card h1 span {
+  margin-top: 6px;
+  font-size: 1.13em;
+  text-shadow: 0 0 32px rgba(255, 91, 155, 0.17);
 }
 
 .welcome-description {
-  max-width: 350px;
+  max-width: 455px;
+  margin: 0 auto 16px;
+}
+
+.welcome-subtext {
+  margin: 23px 0 30px;
+  color: #f7cadb;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.welcome-button,
+.secret-button,
+.cake-cut-button {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  padding: 14px 27px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 211, 229, 0.48);
+  border-radius: 999px;
+  background: linear-gradient(115deg, #ff79ad, #e83b83 65%, #c9296d);
+  box-shadow:
+    0 8px 30px rgba(232, 59, 131, 0.23),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition:
+    box-shadow 0.25s ease,
+    filter 0.25s ease,
+    transform 0.25s ease;
+}
+
+.welcome-button:hover,
+.secret-button:hover,
+.cake-cut-button:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    0 12px 38px rgba(255, 70, 145, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.welcome-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 42px;
+  color: #bd92a5;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.welcome-footer svg {
+  color: var(--pink);
+}
+
+/* =========================================
+   4. SECRET SURPRISE PAGE
+========================================= */
+
+.secret-screen {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+.secret-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 780px);
+  padding: 38px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(64, 12, 37, 0.84),
+      rgba(20, 4, 13, 0.96)
+    );
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  text-align: center;
+}
+
+.secret-gift-intro {
+  position: relative;
+  padding: 26px 12px 32px;
+}
+
+.secret-gift-icon {
+  width: 125px;
+  height: 125px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 28px;
+  color: var(--pink-light);
+  border: 1px solid rgba(255, 115, 168, 0.4);
+  border-radius: 30px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 88, 152, 0.16),
+      rgba(102, 11, 49, 0.4)
+    );
+  box-shadow:
+    0 0 45px rgba(255, 55, 133, 0.14),
+    inset 0 0 28px rgba(255, 108, 166, 0.08);
+}
+
+.secret-sparkle {
+  position: absolute;
+  top: 25px;
+  right: 20%;
+  color: var(--gold);
+  animation: sparklePulse 2s infinite;
+}
+
+.secret-eyebrow {
+  margin-bottom: 14px;
+}
+
+.secret-gift-intro h1 {
+  margin-bottom: 19px;
+  font-size: clamp(32px, 5vw, 49px);
+}
+
+.secret-gift-intro h1 span {
+  margin-top: 8px;
+}
+
+.secret-description {
+  max-width: 440px;
   margin: 0 auto 27px;
-  color: #d0c1d6;
+}
+
+.secret-button {
+  min-width: 190px;
+  margin-top: 10px;
+}
+
+/* Photo and wish content */
+
+.secret-photo-content {
+  width: 100%;
+}
+
+.secret-photo-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  color: var(--pink-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.secret-photo-heading svg {
+  width: 15px;
+  height: 15px;
+}
+
+.secret-photo-frame {
+  position: relative;
+  width: min(100%, 340px);
+  height: 290px;
+  margin: 0 auto 20px;
+  padding: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 174, 207, 0.6);
+  border-radius: 15px;
+  background: linear-gradient(140deg, #ffe4ed, #e6a4bf);
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.28),
+    0 0 30px rgba(255, 75, 143, 0.1);
+}
+
+.secret-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #2b0c1b;
+}
+
+.secret-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--pink-light);
+  text-align: center;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 40%, #50152e, transparent 65%),
+    #210817;
+}
+
+.secret-photo-placeholder p {
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+}
+
+.secret-photo-placeholder small {
+  max-width: 95%;
+  color: #d2a7ba;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.secret-photo-count {
+  margin-bottom: 12px;
+  color: var(--pink);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.secret-photo-content > h2,
+.secret-final-wish h2 {
+  color: var(--pink-light);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(24px, 4vw, 33px);
+  font-weight: 500;
+}
+
+.secret-photo-message {
+  max-width: 510px;
+  margin: 13px auto 20px;
+  color: var(--muted);
   font-size: 14px;
   line-height: 1.9;
 }
 
-.welcome-heart {
-  display: grid;
-  place-items: center;
-  width: 65px;
-  height: 65px;
-  margin: 0 auto 23px;
-  border: 1px solid rgba(233, 165, 209, 0.25);
+.secret-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 24px 0 16px;
+}
+
+.secret-progress-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: rgba(233, 165, 209, 0.07);
-  color: #f5acd2;
-  box-shadow: 0 0 35px rgba(233, 165, 209, 0.08);
+  background: rgba(255, 180, 208, 0.25);
+  transition:
+    background 0.25s ease,
+    width 0.25s ease;
 }
 
-.welcome-decoration {
-  position: absolute;
-  pointer-events: none;
-  color: rgba(245, 169, 208, 0.38);
-  animation: decoration-float 4s ease-in-out infinite;
+.secret-progress-dot.active {
+  width: 24px;
+  border-radius: 20px;
+  background: var(--pink);
+  box-shadow: 0 0 12px rgba(255, 92, 155, 0.4);
 }
 
-.welcome-decoration-one {
-  top: 12%;
-  left: 12%;
+/* Final birthday wish */
+
+.secret-final-wish {
+  margin-top: 28px;
+  padding: 24px 20px;
+  border: 1px solid rgba(255, 137, 181, 0.22);
+  border-radius: 20px;
+  background: rgba(255, 86, 146, 0.055);
 }
 
-.welcome-decoration-two {
-  top: 21%;
-  right: 12%;
-  animation-delay: 1s;
+.secret-final-wish > svg {
+  margin-bottom: 14px;
+  color: var(--gold);
 }
 
-.welcome-decoration-three {
-  bottom: 15%;
-  left: 16%;
-  animation-delay: 1.8s;
+.secret-final-wish h2 {
+  margin-bottom: 14px;
 }
 
-@keyframes decoration-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* Envelope styling, if used by Welcome.jsx */
-
-.envelope-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 180px;
-  margin: 15px auto 25px;
-  perspective: 1000px;
-}
-
-.envelope {
-  width: 180px;
-  height: 120px;
-  position: relative;
-  border-radius: 5px;
-  background: #d78bb8;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
-}
-
-.envelope::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: #e9acd0;
-  clip-path: polygon(0 0, 50% 55%, 100% 0);
-}
-
-.envelope::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #bd6f9e;
-  clip-path: polygon(0 100%, 50% 45%, 100% 100%);
-}
-
-.envelope-heart {
-  position: absolute;
-  z-index: 3;
-  top: 48%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff0f8;
-}
-
-/* =========================================
-   BIRTHDAY LETTER SCREEN
-========================================= */
-
-.letter-screen {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding: 28px 20px;
-  overflow: hidden;
-  background:
-    radial-gradient(
-      ellipse at 50% 40%,
-      #29172f 0%,
-      transparent 65%
-    ),
-    linear-gradient(160deg, #100a1c, #0b0815);
-}
-
-.letter-card {
-  position: relative;
-  width: 100%;
-  max-width: 460px;
-  padding: 34px 27px;
-  overflow: hidden;
-  border: 1px solid rgba(233, 165, 209, 0.17);
-  border-radius: 24px;
-  background: linear-gradient(
-    145deg,
-    rgba(36, 21, 47, 0.94),
-    rgba(20, 13, 32, 0.97)
-  );
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(18px);
-}
-
-.letter-top-icon {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 20px;
-  color: #f5acd2;
-  border: 1px solid rgba(233, 165, 209, 0.25);
-  border-radius: 50%;
-  background: rgba(233, 165, 209, 0.05);
-}
-
-.letter-title {
-  margin: 22px 0 12px;
-  color: #fff4fa;
-  text-align: center;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(39px, 10vw, 49px);
-  font-weight: 400;
-  line-height: 1.1;
-}
-
-.letter-title span {
-  color: #f5a9d0;
-  font-style: italic;
-}
-
-.letter-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 19px 0;
-  color: #f5a9d0;
-  font-size: 20px;
-}
-
-.letter-divider::before,
-.letter-divider::after {
-  width: 55px;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(233, 165, 209, 0.45)
-  );
-  content: "";
-}
-
-.letter-divider::after {
-  transform: rotate(180deg);
-}
-
-.letter-message {
-  color: #d0c1d6;
+.secret-final-wish p {
+  max-width: 510px;
+  margin: 0 auto 18px;
+  color: var(--muted);
   font-size: 13px;
-  font-weight: 300;
-  line-height: 1.95;
-  text-align: left;
+  line-height: 1.9;
 }
 
-.letter-message p {
-  margin: 0 0 13px;
+.secret-final-wish .secret-button {
+  margin-top: 5px;
 }
 
-.letter-signature {
-  margin: 21px 0 26px;
-  color: #e7b1d2;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 20px;
-  font-style: italic;
-  text-align: center;
-  line-height: 1.5;
-}
+/* Shared back / restart actions */
 
-.letter-signature span {
-  color: #f5a9d0;
-}
-
-.letter-actions {
+.secret-bottom-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 180, 208, 0.12);
 }
 
-.letter-back-button {
+.secret-back-button,
+.secret-restart-button,
+.cake-back-button,
+.cake-restart-button,
+.cake-return-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  min-height: 47px;
-  padding: 0 16px;
-  color: #d5bfd9;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 30px;
+  gap: 8px;
+  min-height: 38px;
+  padding: 9px 15px;
+  color: #f1cbd9;
+  font-size: 11px;
+  border: 1px solid rgba(255, 180, 208, 0.22);
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.025);
   cursor: pointer;
-  font-size: 12px;
   transition:
     background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
+    border-color 0.2s ease;
 }
 
-.letter-back-button:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(245, 169, 208, 0.35);
-  transform: translateY(-1px);
-}
-
-.letter-next-button {
-  width: auto;
-  min-height: 47px;
-  max-width: none;
-  gap: 10px;
-  padding: 0 18px;
+.secret-back-button:hover,
+.secret-restart-button:hover,
+.cake-back-button:hover,
+.cake-restart-button:hover,
+.cake-return-button:hover {
+  border-color: rgba(255, 180, 208, 0.6);
+  background: rgba(255, 92, 155, 0.1);
 }
 
 /* =========================================
-   CAKE CELEBRATION SCREEN
+   5. CAKE CELEBRATION PAGE
 ========================================= */
 
 .cake-screen {
-  min-height: 100vh;
-  min-height: 100dvh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 28px 18px;
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(
-      ellipse at 50% 40%,
-      rgba(125, 59, 120, 0.19),
-      transparent 65%
-    ),
-    linear-gradient(160deg, #100a1c, #0b0815);
+  padding-top: 35px;
+  padding-bottom: 35px;
 }
 
 .cake-card {
-  width: min(100%, 560px);
-  padding: 38px 32px 30px;
   position: relative;
+  z-index: 2;
+  width: min(100%, 900px);
+  padding: 35px 32px 28px;
   text-align: center;
+  border: 1px solid var(--border);
   border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  background: linear-gradient(
-    145deg,
-    rgba(46, 25, 72, 0.94),
-    rgba(23, 16, 43, 0.97)
-  );
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.3),
-    0 0 45px rgba(219, 100, 190, 0.08);
-  backdrop-filter: blur(18px);
+  background:
+    radial-gradient(
+      ellipse at 50% 65%,
+      rgba(141, 21, 65, 0.16),
+      transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(52, 9, 31, 0.9),
+      rgba(19, 4, 12, 0.96)
+    );
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
-.cake-eyebrow {
-  gap: 9px;
-  margin-bottom: 17px;
+.cake-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--gold);
+}
+
+.cake-heading p {
+  font-size: 9px;
 }
 
 .cake-title {
-  margin: 0;
-  font-size: clamp(2.3rem, 7vw, 3.5rem);
-  line-height: 1.15;
-  letter-spacing: -1.5px;
-  color: #fff6fc;
+  margin-bottom: 15px;
+  font-size: clamp(34px, 5.5vw, 53px);
 }
 
 .cake-title span {
-  color: #ff9fd3;
-  text-shadow: 0 0 28px rgba(255, 115, 190, 0.3);
+  margin-top: 5px;
 }
 
 .cake-description {
-  max-width: 350px;
-  margin: 15px auto 0;
-  color: #d5c4e4;
-  font-size: 0.96rem;
-  line-height: 1.8;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-/* Cake illustration */
+/* =========================================
+   6. CAKE ILLUSTRATION
+========================================= */
 
 .cake-illustration {
-  width: 280px;
-  max-width: 100%;
-  height: 250px;
-  margin: 20px auto 0;
   position: relative;
+  isolation: isolate;
+  width: min(100%, 350px);
+  height: 300px;
+  margin: 32px auto 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 18px;
-  isolation: isolate;
+  padding-bottom: 28px;
 }
 
-.cake-glow {
-  position: absolute;
-  width: 220px;
-  height: 180px;
-  top: 35px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: rgba(239, 115, 193, 0.12);
-  filter: blur(35px);
-  z-index: -1;
-}
-
-.cake-candles {
-  height: 62px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 21px;
-  position: relative;
-  z-index: 2;
-}
-
-.candle {
-  width: 10px;
-  height: 47px;
-  position: relative;
-  border-radius: 4px 4px 0 0;
-  background: repeating-linear-gradient(
-    135deg,
-    #ffd3e8 0,
-    #ffd3e8 5px,
-    #ff8abf 5px,
-    #ff8abf 9px
-  );
-  box-shadow: 0 0 10px rgba(255, 158, 208, 0.22);
-}
-
-.candle-middle {
-  height: 57px;
-}
-
-.flame {
-  position: absolute;
-  top: -23px;
-  left: 50%;
-  width: 13px;
-  height: 21px;
-  transform: translateX(-50%);
-  border-radius: 50% 50% 45% 45%;
-  background: linear-gradient(to top, #ff8d35, #fff3a1);
-  box-shadow:
-    0 0 15px #ffb65c,
-    0 0 28px rgba(255, 170, 75, 0.55);
-  transform-origin: center bottom;
-  animation: candle-flicker 0.8s ease-in-out infinite alternate;
-}
-
-@keyframes candle-flicker {
-  from {
-    transform: translateX(-50%) rotate(-5deg) scale(0.94);
-  }
-
-  to {
-    transform: translateX(-50%) rotate(5deg) scale(1.06);
-  }
-}
-
-.cake-top {
-  width: 190px;
-  height: 43px;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-  border-radius: 50%;
-  margin-bottom: -12px;
-  background: linear-gradient(135deg, #ffd8ec, #ff9dcf);
-  border: 2px solid rgba(255, 240, 250, 0.7);
-  box-shadow: 0 0 22px rgba(255, 137, 203, 0.2);
-}
-
-.cake-sprinkle {
-  width: 7px;
-  height: 4px;
-  position: absolute;
-  border-radius: 5px;
-  background: #b66cff;
-}
-
-.sprinkle-one {
-  top: 12px;
-  left: 37px;
-  transform: rotate(25deg);
-}
-
-.sprinkle-two {
-  top: 20px;
-  left: 75px;
-  background: #ff639c;
-  transform: rotate(-25deg);
-}
-
-.sprinkle-three {
-  top: 10px;
-  right: 48px;
-  background: #fff;
-  transform: rotate(35deg);
-}
-
-.sprinkle-four {
-  top: 23px;
-  right: 28px;
-  background: #a85aff;
-}
-
-.cake-middle {
-  width: 190px;
-  height: 45px;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-  border-radius: 10px 10px 15px 15px;
-  background: linear-gradient(
-    90deg,
-    #f18cbd,
-    #ffb4d9,
-    #e87db3
-  );
-  border-bottom: 4px solid #d66caa;
-  box-shadow: inset 0 5px 8px rgba(255, 255, 255, 0.2);
-}
-
-.cake-cream {
-  width: 28px;
-  height: 13px;
-  position: absolute;
-  top: -2px;
-  border-radius: 0 0 50% 50%;
-  background: #fff0f8;
-}
-
-.cream-one {
-  left: 28px;
-}
-
-.cream-two {
-  left: 81px;
-}
-
-.cream-three {
-  right: 28px;
-}
-
-.cake-bottom {
-  width: 220px;
-  height: 58px;
-  flex-shrink: 0;
-  margin-top: -1px;
-  position: relative;
-  border-radius: 10px 10px 17px 17px;
-  background: linear-gradient(
-    90deg,
-    #a56be1,
-    #c89af3,
-    #a16add
-  );
-  border-bottom: 5px solid #8550c3;
-  box-shadow: inset 0 5px 10px rgba(255, 255, 255, 0.17);
-}
-
-.cake-berry {
-  position: absolute;
-  top: 15px;
-  color: #ffecf7;
-  font-size: 16px;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
-
-.berry-one {
-  left: 44px;
-}
-
-.berry-two {
-  left: 100px;
-  top: 10px;
-  font-size: 20px;
-}
-
-.berry-three {
-  right: 43px;
-}
+/* Plate */
 
 .cake-plate {
-  width: 255px;
-  height: 15px;
-  flex-shrink: 0;
-  margin-top: -1px;
+  position: absolute;
+  z-index: 1;
+  bottom: 19px;
+  left: 50%;
+  width: 94%;
+  height: 23px;
+  transform: translateX(-50%);
+  border: 2px solid #f3b8cc;
   border-radius: 50%;
-  background: linear-gradient(180deg, #fff0fb, #bca1d7);
-  box-shadow: 0 7px 15px rgba(0, 0, 0, 0.22);
+  background: linear-gradient(180deg, #fce6ef, #bc6689 65%, #61213d);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(255, 100, 160, 0.12);
 }
 
-.cake-celebrated .cake-glow {
-  background: rgba(255, 190, 226, 0.24);
-  filter: blur(42px);
+/* Bottom cake tier */
+
+.cake-bottom {
+  position: relative;
+  z-index: 2;
+  width: 84%;
+  height: 76px;
+  flex-shrink: 0;
+  border: 2px solid #ffb9d2;
+  border-radius: 10px 10px 17px 17px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 24px,
+      rgba(255, 255, 255, 0.08) 25px,
+      transparent 27px
+    ),
+    linear-gradient(90deg, #a72d59, #ff9cbd 22%, #f9c5d8 50%, #dc6593 78%, #8c2148);
+  box-shadow:
+    inset 0 -12px 16px rgba(111, 18, 55, 0.24),
+    inset 0 5px 10px rgba(255, 255, 255, 0.22);
 }
 
-.wish-hint {
-  color: #cdb9df;
-  font-size: 0.87rem;
-  margin: 9px 0 22px;
-}
-
-.wish-message {
-  margin: 5px 0 22px;
-}
-
-.wish-message h2 {
-  margin: 0 0 8px;
-  color: #ffb8df;
-  font-size: 1.2rem;
-}
-
-.wish-message p {
-  margin: 0 auto;
-  max-width: 370px;
-  color: #e4d4ef;
-  font-size: 0.9rem;
-  line-height: 1.7;
-}
-
-.cake-actions {
+.cake-bottom-decoration {
+  position: absolute;
+  inset: 0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  margin-top: 8px;
+  justify-content: space-evenly;
+  color: #9f2854;
+  font-size: 17px;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.35);
 }
 
-.wish-button {
-  min-height: 46px;
+/* Middle cake tier */
+
+.cake-middle {
+  position: relative;
+  z-index: 3;
+  width: 72%;
+  height: 66px;
+  flex-shrink: 0;
+  margin-bottom: -1px;
+  border: 2px solid #ffbed5;
+  border-radius: 10px 10px 13px 13px;
+  background: linear-gradient(
+    90deg,
+    #d85e8b,
+    #ffe0eb 25%,
+    #ffc2d8 52%,
+    #ed8eb2 78%,
+    #b73b6a
+  );
+  box-shadow:
+    inset 0 -9px 12px rgba(164, 37, 86, 0.15),
+    inset 0 4px 9px rgba(255, 255, 255, 0.5);
+}
+
+.cake-middle-decoration {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a82c5d;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Cake top tier */
+
+.cake-top {
+  position: relative;
+  z-index: 4;
+  width: 57%;
+  height: 48px;
+  flex-shrink: 0;
+  margin-bottom: -1px;
+  border: 2px solid #ffe0eb;
+  border-radius: 50% 50% 8px 8px / 45% 45% 8px 8px;
+  background: linear-gradient(180deg, #fff0f5, #ffb9d1);
+  box-shadow:
+    inset 0 -7px 12px rgba(210, 76, 129, 0.16),
+    0 3px 7px rgba(0, 0, 0, 0.1);
+}
+
+.cake-frosting {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-evenly;
+  color: #df407b;
+  font-size: 16px;
+}
+
+/* Candles */
+
+.cake-candles {
+  position: absolute;
+  z-index: 6;
+  top: 15px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 27px;
+}
+
+.cake-candle {
+  position: relative;
+  width: 11px;
+  height: 52px;
+  border: 1px solid rgba(255, 230, 236, 0.8);
+  border-radius: 4px 4px 2px 2px;
+  background: repeating-linear-gradient(
+    -55deg,
+    #fff0f5 0,
+    #fff0f5 5px,
+    #ff70a6 5px,
+    #ff70a6 9px
+  );
+  box-shadow: 0 0 10px rgba(255, 119, 168, 0.2);
+}
+
+.cake-flame {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 13px;
+  height: 20px;
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(
+    ellipse at 50% 68%,
+    #fffde6 0 15%,
+    #ffe18a 35%,
+    #ff9b38 65%,
+    transparent 100%
+  );
+  filter: drop-shadow(0 0 7px rgba(255, 178, 70, 0.7));
 }
 
 /* =========================================
-   TEMPORARY / FUTURE SURPRISE SCREENS
+   7. VERTICAL CAKE CUTS
 ========================================= */
 
-.letter-emoji {
-  display: block;
-  margin: 0 auto 18px;
-  font-size: 40px;
-  text-align: center;
+/*
+  Three vertical lines create four visible sections.
+  These lines cross all cake tiers.
+*/
+
+.cake-vertical-slices {
+  position: absolute;
+  z-index: 8;
+  inset: 55px 8% 30px;
+  pointer-events: none;
+  overflow: visible;
 }
 
-.letter-description {
-  max-width: 360px;
-  margin: 0 auto 25px;
-  color: #d0c1d6;
-  font-size: 14px;
+.cake-vertical-cut {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    #fff9f5,
+    #ff78ac 45%,
+    #7d163f
+  );
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(255, 69, 139, 0.7);
+  transform-origin: center;
+}
+
+.cake-vertical-cut.cut-one {
+  left: 25%;
+}
+
+.cake-vertical-cut.cut-two {
+  left: 50%;
+}
+
+.cake-vertical-cut.cut-three {
+  left: 75%;
+}
+
+/* Cake gets a subtle celebratory glow after cutting */
+
+.cake-illustration.cake-is-cut .cake-bottom,
+.cake-illustration.cake-is-cut .cake-middle,
+.cake-illustration.cake-is-cut .cake-top {
+  box-shadow:
+    0 0 18px rgba(255, 94, 153, 0.22),
+    inset 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.cake-cut-button {
+  min-width: 205px;
+  margin: 12px auto 18px;
+}
+
+/* =========================================
+   8. FINAL BIRTHDAY MESSAGE
+========================================= */
+
+.cake-final-message {
+  width: min(100%, 550px);
+  margin: 20px auto 0;
+  padding: 26px 23px;
+  border: 1px solid rgba(255, 148, 190, 0.2);
+  border-radius: 20px;
+  background: rgba(255, 81, 148, 0.055);
+}
+
+.cake-final-heart {
+  margin-bottom: 12px;
+  color: var(--pink);
+  filter: drop-shadow(0 0 12px rgba(255, 70, 143, 0.4));
+}
+
+.cake-final-message h2 {
+  margin-bottom: 15px;
+  color: var(--pink-light);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 500;
+}
+
+.cake-final-message p {
+  color: var(--muted);
+  font-size: 13px;
   line-height: 1.9;
-  text-align: center;
+}
+
+.cake-final-message .cake-final-wish {
+  margin-top: 12px;
+  color: var(--pink-light);
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.cake-final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cake-return-button {
+  margin-top: 14px;
 }
 
 /* =========================================
-   MOBILE RESPONSIVENESS
+   9. BALLOONS — SIDES ONLY
 ========================================= */
 
-@media (max-width: 480px) {
-  .welcome-screen {
-    padding: 22px 15px;
+.cake-balloon-layer {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cake-flying-balloon {
+  position: absolute;
+  bottom: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+  filter: drop-shadow(0 0 12px rgba(255, 98, 158, 0.25));
+  will-change: transform, opacity;
+}
+
+.cake-flying-balloon.left {
+  left: 5%;
+}
+
+.cake-flying-balloon.right {
+  right: 5%;
+}
+
+/* =========================================
+   10. RESPONSIVE TABLET
+========================================= */
+
+@media (max-width: 768px) {
+  .welcome-screen,
+  .secret-screen,
+  .cake-screen {
+    padding: 28px 16px;
   }
 
   .welcome-card {
-    padding: 34px 20px;
-    border-radius: 23px;
+    padding: 48px 28px 30px;
   }
 
-  .welcome-title {
-    font-size: clamp(37px, 10vw, 48px);
+  .welcome-sparkle {
+    top: 35px;
+    right: 28px;
   }
 
-  .welcome-description {
-    font-size: 13px;
+  .welcome-card h1 {
+    font-size: clamp(36px, 8vw, 55px);
   }
 
-  .letter-screen {
-    padding: 22px 14px;
+  .secret-card {
+    padding: 28px 22px;
   }
 
-  .letter-card {
-    padding: 29px 19px;
-    border-radius: 22px;
-  }
-
-  .letter-title {
-    font-size: clamp(36px, 10vw, 45px);
-  }
-
-  .letter-message {
-    font-size: 12px;
-  }
-
-  .letter-signature {
-    font-size: 18px;
-  }
-
-  .letter-actions {
-    gap: 8px;
-  }
-
-  .letter-back-button {
-    padding: 0 13px;
-  }
-
-  .letter-next-button {
-    padding: 0 13px;
-    font-size: 11px;
-  }
-
-  .cake-screen {
-    padding: 20px 14px;
+  .secret-photo-frame {
+    height: 270px;
   }
 
   .cake-card {
-    padding: 30px 18px 24px;
-    border-radius: 23px;
-  }
-
-  .cake-title {
-    font-size: 2.45rem;
-  }
-
-  .cake-description {
-    font-size: 0.9rem;
+    padding: 30px 20px 24px;
   }
 
   .cake-illustration {
-    transform: scale(0.92);
-    transform-origin: center bottom;
-    margin-top: 12px;
-    margin-bottom: -4px;
-  }
-
-  .cake-actions {
-    gap: 8px;
-  }
-
-  .cake-actions button {
-    padding-left: 12px;
-    padding-right: 12px;
-    font-size: 11px;
+    height: 285px;
+    transform: scale(0.95);
+    transform-origin: top center;
+    margin-bottom: 0;
   }
 }
 
-/* Extra-small phones */
+/* =========================================
+   11. RESPONSIVE MOBILE
+========================================= */
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
+  .welcome-screen,
+  .secret-screen,
+  .cake-screen {
+    padding: 18px 12px;
+  }
+
   .welcome-card {
-    padding: 28px 17px;
+    padding: 38px 20px 26px;
+    border-radius: 22px;
   }
 
-  .letter-card {
-    padding: 25px 16px;
+  .welcome-heart {
+    width: 66px;
+    height: 66px;
+    margin-bottom: 22px;
   }
 
-  .letter-message {
-    font-size: 11px;
+  .welcome-heart svg {
+    width: 30px;
   }
 
-  .letter-actions {
-    gap: 6px;
+  .welcome-sparkle {
+    top: 25px;
+    right: 19px;
+    width: 20px;
   }
 
-  .letter-back-button {
-    padding: 0 10px;
+  .welcome-eyebrow,
+  .secret-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2px;
   }
 
-  .letter-next-button {
-    padding: 0 10px;
+  .welcome-card h1 {
+    font-size: clamp(34px, 10vw, 44px);
+    letter-spacing: -0.8px;
+  }
+
+  .welcome-description,
+  .secret-description,
+  .cake-description {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .welcome-subtext {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .welcome-button,
+  .secret-button,
+  .cake-cut-button {
+    width: 100%;
+    max-width: 280px;
+    min-height: 49px;
+    padding: 13px 17px;
+    font-size: 12px;
+  }
+
+  .welcome-footer {
+    margin-top: 30px;
+    font-size: 9px;
+  }
+
+  .secret-card {
+    padding: 23px 15px;
+    border-radius: 21px;
+  }
+
+  .secret-gift-intro {
+    padding: 20px 3px 25px;
+  }
+
+  .secret-gift-icon {
+    width: 105px;
+    height: 105px;
+    margin-bottom: 24px;
+    border-radius: 25px;
+  }
+
+  .secret-gift-icon svg {
+    width: 62px;
+  }
+
+  .secret-sparkle {
+    top: 20px;
+    right: 8%;
+    width: 23px;
+  }
+
+  .secret-gift-intro h1 {
+    font-size: clamp(30px, 9vw, 39px);
+    letter-spacing: -0.6px;
+  }
+
+  .secret-photo-heading {
+    gap: 8px;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+
+  .secret-photo-frame {
+    width: 100%;
+    height: 250px;
+    padding: 7px;
+    border-radius: 12px;
+  }
+
+  .secret-photo-content > h2,
+  .secret-final-wish h2 {
+    font-size: 25px;
+  }
+
+  .secret-photo-message {
+    font-size: 13px;
+  }
+
+  .secret-final-wish {
+    padding: 22px 13px;
+  }
+
+  .secret-final-wish p {
+    font-size: 12px;
+  }
+
+  .secret-bottom-actions {
+    margin-top: 23px;
+    padding-top: 17px;
+  }
+
+  .secret-back-button,
+  .secret-restart-button {
+    min-height: 36px;
+    padding: 8px 11px;
     font-size: 10px;
   }
 
   .cake-card {
-    padding: 27px 13px 22px;
+    padding: 26px 14px 22px;
+    border-radius: 22px;
   }
 
-  .cake-eyebrow {
+  .cake-heading {
+    gap: 8px;
+  }
+
+  .cake-heading p {
     font-size: 8px;
     letter-spacing: 2px;
   }
 
+  .cake-heading svg {
+    width: 16px;
+  }
+
+  .cake-title {
+    font-size: clamp(31px, 9vw, 40px);
+    letter-spacing: -0.7px;
+  }
+
   .cake-illustration {
-    transform: scale(0.85);
-    margin-top: 8px;
-    margin-bottom: -10px;
+    width: 100%;
+    max-width: 320px;
+    height: 255px;
+    margin-top: 25px;
+    transform: none;
+  }
+
+  .cake-plate {
+    bottom: 17px;
+    height: 19px;
+  }
+
+  .cake-bottom {
+    height: 63px;
+  }
+
+  .cake-middle {
+    height: 55px;
+  }
+
+  .cake-top {
+    height: 42px;
+  }
+
+  .cake-candles {
+    top: 10px;
+    gap: 22px;
+  }
+
+  .cake-candle {
+    height: 43px;
+    width: 9px;
+  }
+
+  .cake-flame {
+    top: -17px;
+    width: 11px;
+    height: 17px;
+  }
+
+  .cake-bottom-decoration {
+    font-size: 13px;
+  }
+
+  .cake-middle-decoration {
+    font-size: 10px;
+  }
+
+  .cake-frosting {
+    font-size: 13px;
+  }
+
+  .cake-final-message {
+    padding: 23px 14px;
+  }
+
+  .cake-final-message h2 {
+    font-size: 26px;
+  }
+
+  .cake-final-message p {
+    font-size: 12px;
+  }
+
+  .cake-final-message .cake-final-wish {
+    font-size: 15px;
+  }
+
+  .cake-final-actions {
+    gap: 8px;
+  }
+
+  .cake-back-button,
+  .cake-restart-button,
+  .cake-return-button {
+    min-height: 37px;
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+
+  .cake-flying-balloon {
+    font-size: 28px;
+  }
+
+  .cake-flying-balloon.left {
+    left: 2%;
+  }
+
+  .cake-flying-balloon.right {
+    right: 2%;
   }
 }
 
-/* Respect reduced-motion preferences */
+/* =========================================
+   12. SMALL SCREEN ACCESSIBILITY
+========================================= */
+
+@media (max-width: 350px) {
+  .welcome-card {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .welcome-card h1 {
+    font-size: 32px;
+  }
+
+  .secret-card {
+    padding-right: 11px;
+    padding-left: 11px;
+  }
+
+  .secret-photo-frame {
+    height: 220px;
+  }
+
+  .cake-card {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .cake-illustration {
+    height: 225px;
+  }
+
+  .cake-bottom {
+    height: 56px;
+  }
+
+  .cake-middle {
+    height: 49px;
+  }
+
+  .cake-top {
+    height: 38px;
+  }
+}
+
+/* =========================================
+   13. REDUCED MOTION
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -936,335 +1381,4 @@ button:disabled {
     transition-duration: 0.01ms !important;
   }
 }
-/* =========================================
-   SPECIAL MESSAGE SCREEN
-========================================= */
 
-.special-card {
-  max-width: 470px;
-}
-
-.special-heart {
-  color: #ff9dce;
-  box-shadow: 0 0 28px rgba(255, 137, 203, 0.12);
-}
-
-.special-message {
-  font-size: 13px;
-  line-height: 2;
-}
-
-.special-wish {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 9px;
-  margin: 24px 0 5px;
-  padding: 15px 12px;
-  border: 1px solid rgba(245, 169, 208, 0.15);
-  border-radius: 14px;
-  background: rgba(245, 169, 208, 0.045);
-  color: #f3b4d8;
-  font-size: 11px;
-  line-height: 1.7;
-}
-
-.special-wish svg {
-  flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .special-card {
-    padding: 29px 19px;
-  }
-
-  .special-message {
-    font-size: 12px;
-  }
-
-  .special-wish {
-    gap: 6px;
-    padding: 12px 8px;
-    font-size: 10px;
-  }
-}
-/* =========================================
-   FINAL SECRET SURPRISE SCREEN
-========================================= */
-
-.secret-screen {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 35px 18px;
-}
-
-.secret-card {
-  width: 100%;
-  max-width: 490px;
-  padding: 42px 34px 25px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(245, 169, 208, 0.2);
-  border-radius: 25px;
-  background: linear-gradient(
-    145deg,
-    rgba(38, 24, 48, 0.97),
-    rgba(20, 17, 32, 0.98)
-  );
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
-}
-
-.secret-eyebrow {
-  font-size: 9px;
-  letter-spacing: 2px;
-  gap: 8px;
-}
-
-.secret-gift {
-  width: 180px;
-  height: 190px;
-  margin: 28px auto 25px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gift-glow {
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: rgba(255, 121, 190, 0.14);
-  filter: blur(30px);
-}
-
-.gift-box {
-  position: relative;
-  width: 120px;
-  height: 100px;
-  margin-top: 25px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #f6a5cb, #c96b9c);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.gift-lid {
-  position: absolute;
-  width: 132px;
-  height: 24px;
-  left: -6px;
-  top: -12px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #ffd0e5, #ec8fbc);
-}
-
-.gift-ribbon-vertical {
-  position: absolute;
-  top: -11px;
-  left: 49px;
-  width: 22px;
-  height: 111px;
-  background: #fff0f7;
-  opacity: 0.9;
-}
-
-.gift-ribbon-horizontal {
-  position: absolute;
-  top: 34px;
-  left: 0;
-  width: 120px;
-  height: 16px;
-  background: #fff0f7;
-  opacity: 0.9;
-}
-
-.gift-bow {
-  position: absolute;
-  z-index: 2;
-  top: -52px;
-  left: 34px;
-  font-size: 48px;
-  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.15));
-}
-
-.gift-sparkle {
-  position: absolute;
-  color: #ffc8e4;
-  font-size: 27px;
-}
-
-.sparkle-a {
-  top: 20px;
-  left: 8px;
-}
-
-.sparkle-b {
-  top: 35px;
-  right: 5px;
-}
-
-.sparkle-c {
-  bottom: 5px;
-  right: 18px;
-  font-size: 23px;
-}
-
-.secret-title {
-  margin: 15px 0;
-  color: #fff0f7;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(27px, 5vw, 35px);
-  font-weight: 500;
-  line-height: 1.35;
-}
-
-.secret-title span {
-  display: block;
-  color: #f3a6cd;
-  font-style: italic;
-}
-
-.secret-description {
-  max-width: 320px;
-  margin: 0 auto 27px;
-  color: #c8b9cb;
-  font-size: 13px;
-  line-height: 1.9;
-}
-
-.secret-open-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 290px;
-}
-
-.secret-revealed {
-  padding: 28px 0 15px;
-}
-
-.secret-heart-icon {
-  width: 75px;
-  height: 75px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 25px;
-  border: 1px solid rgba(255, 157, 206, 0.28);
-  border-radius: 50%;
-  background: rgba(255, 157, 206, 0.09);
-  color: #ff9dce;
-}
-
-.secret-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
-  color: #eaa2c9;
-}
-
-.secret-divider::before,
-.secret-divider::after {
-  content: "";
-  width: 65px;
-  height: 1px;
-  background: rgba(234, 162, 201, 0.35);
-}
-
-.secret-final-message {
-  color: #ded0df;
-  font-size: 13px;
-  line-height: 2;
-}
-
-.secret-final-wish {
-  margin: 22px 0;
-  padding: 17px 14px;
-  border: 1px solid rgba(245, 169, 208, 0.15);
-  border-radius: 13px;
-  background: rgba(245, 169, 208, 0.05);
-  color: #f1b5d7;
-  font-size: 12px;
-  line-height: 1.9;
-}
-
-.secret-hearts {
-  margin: 20px 0;
-  color: #f3a6cd;
-  font-size: 17px;
-  letter-spacing: 2px;
-}
-
-.secret-signature {
-  color: #c8b9cb;
-  font-size: 11px;
-  font-style: italic;
-}
-
-.secret-signature span {
-  color: #ff9dce;
-}
-
-.secret-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(245, 169, 208, 0.12);
-}
-
-.secret-restart-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 12px;
-  border: 1px solid rgba(245, 169, 208, 0.2);
-  border-radius: 10px;
-  background: transparent;
-  color: #e8c6db;
-  font-family: inherit;
-  font-size: 11px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.secret-restart-button:hover {
-  background: rgba(245, 169, 208, 0.08);
-  border-color: rgba(245, 169, 208, 0.4);
-}
-
-@media (max-width: 480px) {
-  .secret-screen {
-    padding: 20px 12px;
-  }
-
-  .secret-card {
-    padding: 32px 20px 22px;
-    border-radius: 20px;
-  }
-
-  .secret-gift {
-    transform-origin: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .secret-final-message {
-    font-size: 12px;
-  }
-
-  .secret-actions {
-    margin-top: 22px;
-  }
-}

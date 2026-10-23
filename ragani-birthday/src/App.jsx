@@ -1,9 +1,10 @@
+
 import { useState } from "react";
+
 import Welcome from "./components/Welcome";
-import BirthdayLetter from "./components/BirthdayLetter";
-import CakeCelebration from "./components/CakeCelebration";
-import SpecialMessage from "./components/SpecialMessage";
 import SecretSurprise from "./components/SecretSurprise";
+import CakeCelebration from "./components/CakeCelebration";
+
 import "./App.css";
 
 function App() {
@@ -12,11 +13,13 @@ function App() {
   return (
     <main className="birthday-app">
       {screen === "welcome" && (
-        <Welcome onNext={() => setScreen("letter")} />
+        <Welcome
+          onNext={() => setScreen("secret")}
+        />
       )}
 
-      {screen === "letter" && (
-        <BirthdayLetter
+      {screen === "secret" && (
+        <SecretSurprise
           onBack={() => setScreen("welcome")}
           onNext={() => setScreen("cake")}
         />
@@ -24,21 +27,7 @@ function App() {
 
       {screen === "cake" && (
         <CakeCelebration
-          onBack={() => setScreen("letter")}
-          onNext={() => setScreen("special")}
-        />
-      )}
-
-      {screen === "special" && (
-        <SpecialMessage
-          onBack={() => setScreen("cake")}
-          onNext={() => setScreen("secret")}
-        />
-      )}
-
-      {screen === "secret" && (
-        <SecretSurprise
-          onBack={() => setScreen("special")}
+          onBack={() => setScreen("secret")}
           onRestart={() => setScreen("welcome")}
         />
       )}
@@ -47,3 +36,4 @@ function App() {
 }
 
 export default App;
+
